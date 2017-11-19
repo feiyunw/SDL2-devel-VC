@@ -1,12 +1,19 @@
-#SDL 2.0 API by Category
-##Basics
-###SDL.h - Initialization and Shutdown
+# SDL2-devel-VC
+Collected and organized SDL2 VC development packages.
+
+# License
+SDL 2.0 and newer are available under the zlib license. This license allows you to use SDL freely in any software.
+Check the license files in lib/ for SDL2 and its dependencies.
+
+# SDL 2.0 API by Category
+## Basics
+### SDL.h - Initialization and Shutdown
 	extern DECLSPEC int SDLCALL SDL_Init(Uint32 flags);
 	extern DECLSPEC int SDLCALL SDL_InitSubSystem(Uint32 flags);
 	extern DECLSPEC void SDLCALL SDL_QuitSubSystem(Uint32 flags);
 	extern DECLSPEC Uint32 SDLCALL SDL_WasInit(Uint32 flags);
 	extern DECLSPEC void SDLCALL SDL_Quit(void);
-###SDL_hints.h - Configuration Variables
+### SDL_hints.h - Configuration Variables
 	extern DECLSPEC SDL_bool SDLCALL SDL_SetHintWithPriority(const char *name,
 	                                                         const char *value,
 	                                                         SDL_HintPriority priority);
@@ -21,12 +28,12 @@
 	                                                 SDL_HintCallback callback,
 	                                                 void *userdata);
 	extern DECLSPEC void SDLCALL SDL_ClearHints(void);
-###SDL_error.h - Error Handling
+### SDL_error.h - Error Handling
 	extern DECLSPEC int SDLCALL SDL_SetError(SDL_PRINTF_FORMAT_STRING const char *fmt, ...) SDL_PRINTF_VARARG_FUNC(1);
 	extern DECLSPEC const char *SDLCALL SDL_GetError(void);
 	extern DECLSPEC void SDLCALL SDL_ClearError(void);
 	extern DECLSPEC int SDLCALL SDL_Error(SDL_errorcode code);
-###SDL_log.h - Log Handling
+### SDL_log.h - Log Handling
 	extern DECLSPEC void SDLCALL SDL_LogSetAllPriority(SDL_LogPriority priority);
 	extern DECLSPEC void SDLCALL SDL_LogSetPriority(int category,
 	                                                SDL_LogPriority priority);
@@ -47,7 +54,7 @@
 	                                             const char *fmt, va_list ap);
 	extern DECLSPEC void SDLCALL SDL_LogGetOutputFunction(SDL_LogOutputFunction *callback, void **userdata);
 	extern DECLSPEC void SDLCALL SDL_LogSetOutputFunction(SDL_LogOutputFunction callback, void *userdata);
-###SDL_assert.h - Assertions
+### SDL_assert.h - Assertions
 	extern DECLSPEC void SDLCALL SDL_SetAssertionHandler(
 	                                            SDL_AssertionHandler handler,
 	                                            void *userdata);
@@ -55,12 +62,12 @@
 	extern DECLSPEC SDL_AssertionHandler SDLCALL SDL_GetAssertionHandler(void **puserdata);
 	extern DECLSPEC const SDL_AssertData * SDLCALL SDL_GetAssertionReport(void);
 	extern DECLSPEC void SDLCALL SDL_ResetAssertionReport(void);
-###SDL_version.h - Querying SDL Version
+### SDL_version.h - Querying SDL Version
 	extern DECLSPEC void SDLCALL SDL_GetVersion(SDL_version * ver);
 	extern DECLSPEC const char *SDLCALL SDL_GetRevision(void);
 	extern DECLSPEC int SDLCALL SDL_GetRevisionNumber(void);
-##Video
-###SDL_video.h - Display and Window Management
+## Video
+### SDL_video.h - Display and Window Management
 	extern DECLSPEC int SDLCALL SDL_GetNumVideoDrivers(void);
 	extern DECLSPEC const char *SDLCALL SDL_GetVideoDriver(int index);
 	extern DECLSPEC int SDLCALL SDL_VideoInit(const char *driver_name);
@@ -182,7 +189,7 @@
 	extern DECLSPEC int SDLCALL SDL_GL_GetSwapInterval(void);
 	extern DECLSPEC void SDLCALL SDL_GL_SwapWindow(SDL_Window * window);
 	extern DECLSPEC void SDLCALL SDL_GL_DeleteContext(SDL_GLContext context);
-###SDL_render.h - 2D Accelerated Rendering
+### SDL_render.h - 2D Accelerated Rendering
 	extern DECLSPEC int SDLCALL SDL_GetNumRenderDrivers(void);
 	extern DECLSPEC int SDLCALL SDL_GetRenderDriverInfo(int index,
 	                                                    SDL_RendererInfo * info);
@@ -303,7 +310,7 @@
 	extern DECLSPEC void SDLCALL SDL_DestroyRenderer(SDL_Renderer * renderer);
 	extern DECLSPEC int SDLCALL SDL_GL_BindTexture(SDL_Texture *texture, float *texw, float *texh);
 	extern DECLSPEC int SDLCALL SDL_GL_UnbindTexture(SDL_Texture *texture);
-###SDL_pixels.h - Pixel Formats and Conversion Routines
+### SDL_pixels.h - Pixel Formats and Conversion Routines
 	extern DECLSPEC const char* SDLCALL SDL_GetPixelFormatName(Uint32 format);
 	extern DECLSPEC SDL_bool SDLCALL SDL_PixelFormatEnumToMasks(Uint32 format,
 	                                                            int *bpp,
@@ -338,7 +345,7 @@
 	                                         Uint8 * r, Uint8 * g, Uint8 * b,
 	                                         Uint8 * a);
 	extern DECLSPEC void SDLCALL SDL_CalculateGammaRamp(float gamma, Uint16 * ramp);
-###SDL_rect.h - Rectangle Functions
+### SDL_rect.h - Rectangle Functions
 	extern DECLSPEC SDL_bool SDLCALL SDL_HasIntersection(const SDL_Rect * A,
 	                                                     const SDL_Rect * B);
 	extern DECLSPEC SDL_bool SDLCALL SDL_IntersectRect(const SDL_Rect * A,
@@ -355,7 +362,7 @@
 	                                                          rect, int *X1,
 	                                                          int *Y1, int *X2,
 	                                                          int *Y2);
-###SDL_surface.h - Surface Creation and Simple Drawing
+### SDL_surface.h - Surface Creation and Simple Drawing
 	extern DECLSPEC SDL_Surface *SDLCALL SDL_CreateRGBSurface
 	    (Uint32 flags, int width, int height, int depth,
 	     Uint32 Rmask, Uint32 Gmask, Uint32 Bmask, Uint32 Amask);
@@ -434,15 +441,15 @@
 	extern DECLSPEC int SDLCALL SDL_LowerBlitScaled
 	    (SDL_Surface * src, SDL_Rect * srcrect,
 	    SDL_Surface * dst, SDL_Rect * dstrect);
-###SDL_syswm.h - Platform-specific Window Management
+### SDL_syswm.h - Platform-specific Window Management
 	extern DECLSPEC SDL_bool SDLCALL SDL_GetWindowWMInfo(SDL_Window * window,
 	                                                     SDL_SysWMinfo * info);
-###SDL_clipboard.h - Clipboard Handling
+### SDL_clipboard.h - Clipboard Handling
 	extern DECLSPEC int SDLCALL SDL_SetClipboardText(const char *text);
 	extern DECLSPEC char * SDLCALL SDL_GetClipboardText(void);
 	extern DECLSPEC SDL_bool SDLCALL SDL_HasClipboardText(void);
-##Input Events
-###SDL_events.h - Event Handling
+## Input Events
+### SDL_events.h - Event Handling
 	extern DECLSPEC void SDLCALL SDL_PumpEvents(void);
 	extern DECLSPEC int SDLCALL SDL_PeepEvents(SDL_Event * events, int numevents,
 	                                           SDL_eventaction action,
@@ -468,7 +475,7 @@
 	                                              void *userdata);
 	extern DECLSPEC Uint8 SDLCALL SDL_EventState(Uint32 type, int state);
 	extern DECLSPEC Uint32 SDLCALL SDL_RegisterEvents(int numevents);
-###SDL_keyboard.h - Keyboard Support
+### SDL_keyboard.h - Keyboard Support
 	extern DECLSPEC SDL_Window * SDLCALL SDL_GetKeyboardFocus(void);
 	extern DECLSPEC const Uint8 *SDLCALL SDL_GetKeyboardState(int *numkeys);
 	extern DECLSPEC SDL_Keymod SDLCALL SDL_GetModState(void);
@@ -485,7 +492,7 @@
 	extern DECLSPEC void SDLCALL SDL_SetTextInputRect(SDL_Rect *rect);
 	extern DECLSPEC SDL_bool SDLCALL SDL_HasScreenKeyboardSupport(void);
 	extern DECLSPEC SDL_bool SDLCALL SDL_IsScreenKeyboardShown(SDL_Window *window);
-###SDL_mouse.h - Mouse Support
+### SDL_mouse.h - Mouse Support
 	extern DECLSPEC SDL_Window * SDLCALL SDL_GetMouseFocus(void);
 	extern DECLSPEC Uint32 SDLCALL SDL_GetMouseState(int *x, int *y);
 	extern DECLSPEC Uint32 SDLCALL SDL_GetGlobalMouseState(int *x, int *y);
@@ -509,7 +516,7 @@
 	extern DECLSPEC SDL_Cursor *SDLCALL SDL_GetDefaultCursor(void);
 	extern DECLSPEC void SDLCALL SDL_FreeCursor(SDL_Cursor * cursor);
 	extern DECLSPEC int SDLCALL SDL_ShowCursor(int toggle);
-###SDL_joystick.h - Joystick Support
+### SDL_joystick.h - Joystick Support
 	extern DECLSPEC void SDLCALL SDL_LockJoysticks(void);
 	extern DECLSPEC void SDLCALL SDL_UnlockJoysticks(void);
 	extern DECLSPEC int SDLCALL SDL_NumJoysticks(void);
@@ -550,7 +557,7 @@
 	                                                    int button);
 	extern DECLSPEC void SDLCALL SDL_JoystickClose(SDL_Joystick * joystick);
 	extern DECLSPEC SDL_JoystickPowerLevel SDLCALL SDL_JoystickCurrentPowerLevel(SDL_Joystick * joystick);
-###SDL_gamecontroller.h - Game Controller Support
+### SDL_gamecontroller.h - Game Controller Support
 	extern DECLSPEC int SDLCALL SDL_GameControllerAddMappingsFromRW(SDL_RWops * rw, int freerw);
 	extern DECLSPEC int SDLCALL SDL_GameControllerAddMapping(const char* mappingString);
 	extern DECLSPEC int SDLCALL SDL_GameControllerNumMappings(void);
@@ -585,8 +592,8 @@
 	extern DECLSPEC Uint8 SDLCALL SDL_GameControllerGetButton(SDL_GameController *gamecontroller,
 	                                                          SDL_GameControllerButton button);
 	extern DECLSPEC void SDLCALL SDL_GameControllerClose(SDL_GameController *gamecontroller);
-##Force Feedback
-###SDL_haptic.h - Force Feedback Support
+## Force Feedback
+### SDL_haptic.h - Force Feedback Support
 	extern DECLSPEC int SDLCALL SDL_NumHaptics(void);
 	extern DECLSPEC const char *SDLCALL SDL_HapticName(int device_index);
 	extern DECLSPEC SDL_Haptic *SDLCALL SDL_HapticOpen(int device_index);
@@ -629,8 +636,8 @@
 	extern DECLSPEC int SDLCALL SDL_HapticRumbleInit(SDL_Haptic * haptic);
 	extern DECLSPEC int SDLCALL SDL_HapticRumblePlay(SDL_Haptic * haptic, float strength, Uint32 length );
 	extern DECLSPEC int SDLCALL SDL_HapticRumbleStop(SDL_Haptic * haptic);
-##Audio
-###SDL_audio.h - Audio Device Management, Playing and Recording
+## Audio
+### SDL_audio.h - Audio Device Management, Playing and Recording
 	extern DECLSPEC int SDLCALL SDL_GetNumAudioDrivers(void);
 	extern DECLSPEC const char *SDLCALL SDL_GetAudioDriver(int index);
 	extern DECLSPEC int SDLCALL SDL_AudioInit(const char *driver_name);
@@ -699,8 +706,8 @@
 	extern DECLSPEC void SDLCALL SDL_UnlockAudioDevice(SDL_AudioDeviceID dev);
 	extern DECLSPEC void SDLCALL SDL_CloseAudio(void);
 	extern DECLSPEC void SDLCALL SDL_CloseAudioDevice(SDL_AudioDeviceID dev);
-##Threads
-###SDL_thread.h - Thread Management
+## Threads
+### SDL_thread.h - Thread Management
 	extern DECLSPEC SDL_Thread *SDLCALL
 	SDL_CreateThread(SDL_ThreadFunction fn, const char *name, void *data,
 	                 pfnSDL_CurrentBeginThread pfnBeginThread,
@@ -720,7 +727,7 @@
 	extern DECLSPEC SDL_TLSID SDLCALL SDL_TLSCreate(void);
 	extern DECLSPEC void * SDLCALL SDL_TLSGet(SDL_TLSID id);
 	extern DECLSPEC int SDLCALL SDL_TLSSet(SDL_TLSID id, const void *value, void (SDLCALL *destructor)(void*));
-###SDL_mutex.h - Thread Synchronization Primitives
+### SDL_mutex.h - Thread Synchronization Primitives
 	extern DECLSPEC SDL_mutex *SDLCALL SDL_CreateMutex(void);
 	extern DECLSPEC int SDLCALL SDL_LockMutex(SDL_mutex * mutex);
 	extern DECLSPEC int SDLCALL SDL_TryLockMutex(SDL_mutex * mutex);
@@ -740,7 +747,7 @@
 	extern DECLSPEC int SDLCALL SDL_CondWait(SDL_cond * cond, SDL_mutex * mutex);
 	extern DECLSPEC int SDLCALL SDL_CondWaitTimeout(SDL_cond * cond,
 	                                                SDL_mutex * mutex, Uint32 ms);
-###SDL_atomic.h - Atomic Operations
+### SDL_atomic.h - Atomic Operations
 	extern DECLSPEC SDL_bool SDLCALL SDL_AtomicTryLock(SDL_SpinLock *lock);
 	extern DECLSPEC void SDLCALL SDL_AtomicLock(SDL_SpinLock *lock);
 	extern DECLSPEC void SDLCALL SDL_AtomicUnlock(SDL_SpinLock *lock);
@@ -753,8 +760,8 @@
 	extern DECLSPEC SDL_bool SDLCALL SDL_AtomicCASPtr(void **a, void *oldval, void *newval);
 	extern DECLSPEC void* SDLCALL SDL_AtomicSetPtr(void **a, void* v);
 	extern DECLSPEC void* SDLCALL SDL_AtomicGetPtr(void **a);
-##Timers
-###SDL_timer.h - Timer Support
+## Timers
+### SDL_timer.h - Timer Support
 	extern DECLSPEC Uint32 SDLCALL SDL_GetTicks(void);
 	extern DECLSPEC Uint64 SDLCALL SDL_GetPerformanceCounter(void);
 	extern DECLSPEC Uint64 SDLCALL SDL_GetPerformanceFrequency(void);
@@ -763,11 +770,11 @@
 	                                                 SDL_TimerCallback callback,
 	                                                 void *param);
 	extern DECLSPEC SDL_bool SDLCALL SDL_RemoveTimer(SDL_TimerID id);
-##File Abstraction
-###SDL_filesystem.h - Filesystem Paths
+## File Abstraction
+### SDL_filesystem.h - Filesystem Paths
 	extern DECLSPEC char *SDLCALL SDL_GetBasePath(void);
 	extern DECLSPEC char *SDLCALL SDL_GetPrefPath(const char *org, const char *app);
-###SDL_rwops.h - File I/O Abstraction
+### SDL_rwops.h - File I/O Abstraction
 	extern DECLSPEC SDL_RWops *SDLCALL SDL_RWFromFile(const char *file,
 	                                                  const char *mode);
 	extern DECLSPEC SDL_RWops *SDLCALL SDL_RWFromFP(FILE * fp,
@@ -795,16 +802,16 @@
 	extern DECLSPEC size_t SDLCALL SDL_WriteBE32(SDL_RWops * dst, Uint32 value);
 	extern DECLSPEC size_t SDLCALL SDL_WriteLE64(SDL_RWops * dst, Uint64 value);
 	extern DECLSPEC size_t SDLCALL SDL_WriteBE64(SDL_RWops * dst, Uint64 value);
-##Shared Object Support
-###SDL_loadso.h - Shared Object Loading and Function Lookup
+## Shared Object Support
+### SDL_loadso.h - Shared Object Loading and Function Lookup
 	extern DECLSPEC void *SDLCALL SDL_LoadObject(const char *sofile);
 	extern DECLSPEC void *SDLCALL SDL_LoadFunction(void *handle,
 	                                               const char *name);
 	extern DECLSPEC void SDLCALL SDL_UnloadObject(void *handle);
-##Platform and CPU Information
-###SDL_platform.h - Platform Detection
+## Platform and CPU Information
+### SDL_platform.h - Platform Detection
 	extern DECLSPEC const char * SDLCALL SDL_GetPlatform (void);
-###SDL_cpuinfo.h - CPU Feature Detection
+### SDL_cpuinfo.h - CPU Feature Detection
 	extern DECLSPEC int SDLCALL SDL_GetCPUCount(void);
 	extern DECLSPEC int SDLCALL SDL_GetCPUCacheLineSize(void);
 	extern DECLSPEC SDL_bool SDLCALL SDL_HasRDTSC(void);
@@ -820,18 +827,18 @@
 	extern DECLSPEC SDL_bool SDLCALL SDL_HasAVX2(void);
 	extern DECLSPEC SDL_bool SDLCALL SDL_HasNEON(void);
 	extern DECLSPEC int SDLCALL SDL_GetSystemRAM(void);
-###SDL_endian.h - Byte Order and Byte Swapping
+### SDL_endian.h - Byte Order and Byte Swapping
 	SDL_FORCE_INLINE Uint16 SDL_Swap16(Uint16 x);
 	SDL_FORCE_INLINE Uint32 SDL_Swap32(Uint32 x);
 	SDL_FORCE_INLINE Uint64 SDL_Swap64(Uint64 x);
 	SDL_FORCE_INLINE float SDL_SwapFloat(float x);
-###SDL_bits.h - Bit Manipulation
+### SDL_bits.h - Bit Manipulation
 	SDL_FORCE_INLINE int SDL_MostSignificantBitIndex32(Uint32 x);
-##Power Management
-###SDL_power.h - Power Management Status
+## Power Management
+### SDL_power.h - Power Management Status
 	extern DECLSPEC SDL_PowerState SDLCALL SDL_GetPowerInfo(int *secs, int *pct);
-##Additional Functionality
-###SDL_system.h - Platform-specific Functionality
+## Additional Functionality
+### SDL_system.h - Platform-specific Functionality
 	extern DECLSPEC void SDLCALL SDL_SetWindowsMessageHook(SDL_WindowsMessageHook callback, void *userdata);
 	extern DECLSPEC int SDLCALL SDL_Direct3D9GetAdapterIndex( int displayIndex );
 	extern DECLSPEC IDirect3DDevice9* SDLCALL SDL_RenderGetD3D9Device(SDL_Renderer * renderer);
@@ -845,7 +852,7 @@
 	extern DECLSPEC const char * SDLCALL SDL_AndroidGetExternalStoragePath(void);
 	extern DECLSPEC const wchar_t * SDLCALL SDL_WinRTGetFSPathUNICODE(SDL_WinRT_Path pathType);
 	extern DECLSPEC const char * SDLCALL SDL_WinRTGetFSPathUTF8(SDL_WinRT_Path pathType);
-###SDL_stdinc.h - Standard Library Functionality
+### SDL_stdinc.h - Standard Library Functionality
 	extern DECLSPEC void *SDLCALL SDL_malloc(size_t size);
 	extern DECLSPEC void *SDLCALL SDL_calloc(size_t nmemb, size_t size);
 	extern DECLSPEC void *SDLCALL SDL_realloc(void *mem, size_t size);
@@ -937,40 +944,40 @@
 	                                               const char *fromcode,
 	                                               const char *inbuf,
 	                                               size_t inbytesleft);
-##Others
-###SDL_blendmode.h
+## Others
+### SDL_blendmode.h
 	extern DECLSPEC SDL_BlendMode SDLCALL SDL_ComposeCustomBlendMode(SDL_BlendFactor srcColorFactor,
 	                                                                 SDL_BlendFactor dstColorFactor,
 	                                                                 SDL_BlendOperation colorOperation,
 	                                                                 SDL_BlendFactor srcAlphaFactor,
 	                                                                 SDL_BlendFactor dstAlphaFactor,
 	                                                                 SDL_BlendOperation alphaOperation);
-###SDL_gesture.h
+### SDL_gesture.h
 	extern DECLSPEC int SDLCALL SDL_RecordGesture(SDL_TouchID touchId);
 	extern DECLSPEC int SDLCALL SDL_SaveAllDollarTemplates(SDL_RWops *dst);
 	extern DECLSPEC int SDLCALL SDL_SaveDollarTemplate(SDL_GestureID gestureId,SDL_RWops *dst);
 	extern DECLSPEC int SDLCALL SDL_LoadDollarTemplates(SDL_TouchID touchId, SDL_RWops *src);
-###SDL_main.h
+### SDL_main.h
 	extern C_LINKAGE DECLSPEC int SDL_main(int argc, char *argv[]);
 	extern DECLSPEC void SDLCALL SDL_SetMainReady(void);
 	extern DECLSPEC int SDLCALL SDL_RegisterApp(char *name, Uint32 style,
 	                                            void *hInst);
 	extern DECLSPEC void SDLCALL SDL_UnregisterApp(void);
 	extern DECLSPEC int SDLCALL SDL_WinRTRunApp(int (*mainFunction)(int, char **), void * reserved);
-###SDL_messagebox.h
+### SDL_messagebox.h
 	extern DECLSPEC int SDLCALL SDL_ShowMessageBox(const SDL_MessageBoxData *messageboxdata, int *buttonid);
 	extern DECLSPEC int SDLCALL SDL_ShowSimpleMessageBox(Uint32 flags, const char *title, const char *message, SDL_Window *window);
-###SDL_shape.h
+### SDL_shape.h
 	extern DECLSPEC SDL_Window * SDLCALL SDL_CreateShapedWindow(const char *title,unsigned int x,unsigned int y,unsigned int w,unsigned int h,Uint32 flags);
 	extern DECLSPEC SDL_bool SDLCALL SDL_IsShapedWindow(const SDL_Window *window);
 	extern DECLSPEC int SDLCALL SDL_SetWindowShape(SDL_Window *window,SDL_Surface *shape,SDL_WindowShapeMode *shape_mode);
 	extern DECLSPEC int SDLCALL SDL_GetShapedWindowMode(SDL_Window *window,SDL_WindowShapeMode *shape_mode);
-###SDL_touch.h
+### SDL_touch.h
 	extern DECLSPEC int SDLCALL SDL_GetNumTouchDevices(void);
 	extern DECLSPEC SDL_TouchID SDLCALL SDL_GetTouchDevice(int index);
 	extern DECLSPEC int SDLCALL SDL_GetNumTouchFingers(SDL_TouchID touchID);
 	extern DECLSPEC SDL_Finger * SDLCALL SDL_GetTouchFinger(SDL_TouchID touchID, int index);
-###SDL_vulkan.h
+### SDL_vulkan.h
 	extern DECLSPEC int SDLCALL SDL_Vulkan_LoadLibrary(const char *path);
 	extern DECLSPEC void *SDLCALL SDL_Vulkan_GetVkGetInstanceProcAddr(void);
 	extern DECLSPEC void SDLCALL SDL_Vulkan_UnloadLibrary(void);
