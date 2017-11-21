@@ -957,6 +957,52 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC int SDLCALL SDL_SaveAllDollarTemplates(SDL_RWops *dst);
 	extern DECLSPEC int SDLCALL SDL_SaveDollarTemplate(SDL_GestureID gestureId,SDL_RWops *dst);
 	extern DECLSPEC int SDLCALL SDL_LoadDollarTemplates(SDL_TouchID touchId, SDL_RWops *src);
+### SDL_image.h
+	extern DECLSPEC const SDL_version * SDLCALL IMG_Linked_Version(void);
+	extern DECLSPEC int SDLCALL IMG_Init(int flags);
+	extern DECLSPEC void SDLCALL IMG_Quit(void);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_LoadTyped_RW(SDL_RWops *src, int freesrc, const char *type);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_Load(const char *file);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_Load_RW(SDL_RWops *src, int freesrc);
+	extern DECLSPEC SDL_Texture * SDLCALL IMG_LoadTexture(SDL_Renderer *renderer, const char *file);
+	extern DECLSPEC SDL_Texture * SDLCALL IMG_LoadTexture_RW(SDL_Renderer *renderer, SDL_RWops *src, int freesrc);
+	extern DECLSPEC SDL_Texture * SDLCALL IMG_LoadTextureTyped_RW(SDL_Renderer *renderer, SDL_RWops *src, int freesrc, const char *type);
+	extern DECLSPEC int SDLCALL IMG_isICO(SDL_RWops *src);
+	extern DECLSPEC int SDLCALL IMG_isCUR(SDL_RWops *src);
+	extern DECLSPEC int SDLCALL IMG_isBMP(SDL_RWops *src);
+	extern DECLSPEC int SDLCALL IMG_isGIF(SDL_RWops *src);
+	extern DECLSPEC int SDLCALL IMG_isJPG(SDL_RWops *src);
+	extern DECLSPEC int SDLCALL IMG_isLBM(SDL_RWops *src);
+	extern DECLSPEC int SDLCALL IMG_isPCX(SDL_RWops *src);
+	extern DECLSPEC int SDLCALL IMG_isPNG(SDL_RWops *src);
+	extern DECLSPEC int SDLCALL IMG_isPNM(SDL_RWops *src);
+	extern DECLSPEC int SDLCALL IMG_isSVG(SDL_RWops *src);
+	extern DECLSPEC int SDLCALL IMG_isTIF(SDL_RWops *src);
+	extern DECLSPEC int SDLCALL IMG_isXCF(SDL_RWops *src);
+	extern DECLSPEC int SDLCALL IMG_isXPM(SDL_RWops *src);
+	extern DECLSPEC int SDLCALL IMG_isXV(SDL_RWops *src);
+	extern DECLSPEC int SDLCALL IMG_isWEBP(SDL_RWops *src);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_LoadICO_RW(SDL_RWops *src);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_LoadCUR_RW(SDL_RWops *src);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_LoadBMP_RW(SDL_RWops *src);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_LoadGIF_RW(SDL_RWops *src);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_LoadJPG_RW(SDL_RWops *src);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_LoadLBM_RW(SDL_RWops *src);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_LoadPCX_RW(SDL_RWops *src);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_LoadPNG_RW(SDL_RWops *src);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_LoadPNM_RW(SDL_RWops *src);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_LoadSVG_RW(SDL_RWops *src);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_LoadTGA_RW(SDL_RWops *src);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_LoadTIF_RW(SDL_RWops *src);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_LoadXCF_RW(SDL_RWops *src);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_LoadXPM_RW(SDL_RWops *src);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_LoadXV_RW(SDL_RWops *src);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_LoadWEBP_RW(SDL_RWops *src);
+	extern DECLSPEC SDL_Surface * SDLCALL IMG_ReadXPMFromArray(char **xpm);
+	extern DECLSPEC int SDLCALL IMG_SavePNG(SDL_Surface *surface, const char *file);
+	extern DECLSPEC int SDLCALL IMG_SavePNG_RW(SDL_Surface *surface, SDL_RWops *dst, int freedst);
+	extern DECLSPEC int SDLCALL IMG_SaveJPG(SDL_Surface *surface, const char *file, int quality);
+	extern DECLSPEC int SDLCALL IMG_SaveJPG_RW(SDL_Surface *surface, SDL_RWops *dst, int freedst, int quality);
 ### SDL_main.h
 	extern C_LINKAGE DECLSPEC int SDL_main(int argc, char *argv[]);
 	extern DECLSPEC void SDLCALL SDL_SetMainReady(void);
@@ -967,6 +1013,120 @@ Check the license files in lib/ for SDL2 and its dependencies.
 ### SDL_messagebox.h
 	extern DECLSPEC int SDLCALL SDL_ShowMessageBox(const SDL_MessageBoxData *messageboxdata, int *buttonid);
 	extern DECLSPEC int SDLCALL SDL_ShowSimpleMessageBox(Uint32 flags, const char *title, const char *message, SDL_Window *window);
+### SDL_mixer.h
+	extern DECLSPEC const SDL_version * SDLCALL Mix_Linked_Version(void);
+	extern DECLSPEC int SDLCALL Mix_Init(int flags);
+	extern DECLSPEC void SDLCALL Mix_Quit(void);
+	extern DECLSPEC int SDLCALL Mix_OpenAudio(int frequency, Uint16 format, int channels, int chunksize);
+	extern DECLSPEC int SDLCALL Mix_OpenAudioDevice(int frequency, Uint16 format, int channels, int chunksize, const char* device, int allowed_changes);
+	extern DECLSPEC int SDLCALL Mix_AllocateChannels(int numchans);
+	extern DECLSPEC int SDLCALL Mix_QuerySpec(int *frequency,Uint16 *format,int *channels);
+	extern DECLSPEC Mix_Chunk * SDLCALL Mix_LoadWAV_RW(SDL_RWops *src, int freesrc);
+	extern DECLSPEC Mix_Music * SDLCALL Mix_LoadMUS(const char *file);
+	extern DECLSPEC Mix_Music * SDLCALL Mix_LoadMUS_RW(SDL_RWops *src, int freesrc);
+	extern DECLSPEC Mix_Music * SDLCALL Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc);
+	extern DECLSPEC Mix_Chunk * SDLCALL Mix_QuickLoad_WAV(Uint8 *mem);
+	extern DECLSPEC Mix_Chunk * SDLCALL Mix_QuickLoad_RAW(Uint8 *mem, Uint32 len);
+	extern DECLSPEC void SDLCALL Mix_FreeChunk(Mix_Chunk *chunk);
+	extern DECLSPEC void SDLCALL Mix_FreeMusic(Mix_Music *music);
+	extern DECLSPEC int SDLCALL Mix_GetNumChunkDecoders(void);
+	extern DECLSPEC const char * SDLCALL Mix_GetChunkDecoder(int index);
+	extern DECLSPEC SDL_bool SDLCALL Mix_HasChunkDecoder(const char *name);
+	extern DECLSPEC int SDLCALL Mix_GetNumMusicDecoders(void);
+	extern DECLSPEC const char * SDLCALL Mix_GetMusicDecoder(int index);
+	extern DECLSPEC SDL_bool SDLCALL Mix_HasMusicDecoder(const char *name);
+	extern DECLSPEC Mix_MusicType SDLCALL Mix_GetMusicType(const Mix_Music *music);
+	extern DECLSPEC void SDLCALL Mix_SetPostMix(void (SDLCALL *mix_func)(void *udata, Uint8 *stream, int len), void *arg);
+	extern DECLSPEC void SDLCALL Mix_HookMusic(void (SDLCALL *mix_func)(void *udata, Uint8 *stream, int len), void *arg);
+	extern DECLSPEC void SDLCALL Mix_HookMusicFinished(void (SDLCALL *music_finished)(void));
+	extern DECLSPEC void * SDLCALL Mix_GetMusicHookData(void);
+	extern DECLSPEC void SDLCALL Mix_ChannelFinished(void (SDLCALL *channel_finished)(int channel));
+	extern DECLSPEC int SDLCALL Mix_RegisterEffect(int chan, Mix_EffectFunc_t f, Mix_EffectDone_t d, void *arg);
+	extern DECLSPEC int SDLCALL Mix_UnregisterEffect(int channel, Mix_EffectFunc_t f);
+	extern DECLSPEC int SDLCALL Mix_UnregisterAllEffects(int channel);
+	extern DECLSPEC int SDLCALL Mix_SetPanning(int channel, Uint8 left, Uint8 right);
+	extern DECLSPEC int SDLCALL Mix_SetPosition(int channel, Sint16 angle, Uint8 distance);
+	extern DECLSPEC int SDLCALL Mix_SetDistance(int channel, Uint8 distance);
+	extern no_parse_DECLSPEC int SDLCALL Mix_SetReverb(int channel, Uint8 echo);
+	extern DECLSPEC int SDLCALL Mix_SetReverseStereo(int channel, int flip);
+	extern DECLSPEC int SDLCALL Mix_ReserveChannels(int num);
+	extern DECLSPEC int SDLCALL Mix_GroupChannel(int which, int tag);
+	extern DECLSPEC int SDLCALL Mix_GroupChannels(int from, int to, int tag);
+	extern DECLSPEC int SDLCALL Mix_GroupAvailable(int tag);
+	extern DECLSPEC int SDLCALL Mix_GroupCount(int tag);
+	extern DECLSPEC int SDLCALL Mix_GroupOldest(int tag);
+	extern DECLSPEC int SDLCALL Mix_GroupNewer(int tag);
+	extern DECLSPEC int SDLCALL Mix_PlayChannelTimed(int channel, Mix_Chunk *chunk, int loops, int ticks);
+	extern DECLSPEC int SDLCALL Mix_PlayMusic(Mix_Music *music, int loops);
+	extern DECLSPEC int SDLCALL Mix_FadeInMusic(Mix_Music *music, int loops, int ms);
+	extern DECLSPEC int SDLCALL Mix_FadeInMusicPos(Mix_Music *music, int loops, int ms, double position);
+	extern DECLSPEC int SDLCALL Mix_FadeInChannelTimed(int channel, Mix_Chunk *chunk, int loops, int ms, int ticks);
+	extern DECLSPEC int SDLCALL Mix_Volume(int channel, int volume);
+	extern DECLSPEC int SDLCALL Mix_VolumeChunk(Mix_Chunk *chunk, int volume);
+	extern DECLSPEC int SDLCALL Mix_VolumeMusic(int volume);
+	extern DECLSPEC int SDLCALL Mix_HaltChannel(int channel);
+	extern DECLSPEC int SDLCALL Mix_HaltGroup(int tag);
+	extern DECLSPEC int SDLCALL Mix_HaltMusic(void);
+	extern DECLSPEC int SDLCALL Mix_ExpireChannel(int channel, int ticks);
+	extern DECLSPEC int SDLCALL Mix_FadeOutChannel(int which, int ms);
+	extern DECLSPEC int SDLCALL Mix_FadeOutGroup(int tag, int ms);
+	extern DECLSPEC int SDLCALL Mix_FadeOutMusic(int ms);
+	extern DECLSPEC Mix_Fading SDLCALL Mix_FadingMusic(void);
+	extern DECLSPEC Mix_Fading SDLCALL Mix_FadingChannel(int which);
+	extern DECLSPEC void SDLCALL Mix_Pause(int channel);
+	extern DECLSPEC void SDLCALL Mix_Resume(int channel);
+	extern DECLSPEC int SDLCALL Mix_Paused(int channel);
+	extern DECLSPEC void SDLCALL Mix_PauseMusic(void);
+	extern DECLSPEC void SDLCALL Mix_ResumeMusic(void);
+	extern DECLSPEC void SDLCALL Mix_RewindMusic(void);
+	extern DECLSPEC int SDLCALL Mix_PausedMusic(void);
+	extern DECLSPEC int SDLCALL Mix_SetMusicPosition(double position);
+	extern DECLSPEC int SDLCALL Mix_Playing(int channel);
+	extern DECLSPEC int SDLCALL Mix_PlayingMusic(void);
+	extern DECLSPEC int SDLCALL Mix_SetMusicCMD(const char *command);
+	extern DECLSPEC int SDLCALL Mix_SetSynchroValue(int value);
+	extern DECLSPEC int SDLCALL Mix_GetSynchroValue(void);
+	extern DECLSPEC int SDLCALL Mix_SetSoundFonts(const char *paths);
+	extern DECLSPEC const char* SDLCALL Mix_GetSoundFonts(void);
+	extern DECLSPEC int SDLCALL Mix_EachSoundFont(int (SDLCALL *function)(const char*, void*), void *data);
+	extern DECLSPEC Mix_Chunk * SDLCALL Mix_GetChunk(int channel);
+	extern DECLSPEC void SDLCALL Mix_CloseAudio(void);
+### SDL_net.h
+	extern DECLSPEC const SDLNet_version * SDLCALL SDLNet_Linked_Version(void);
+	extern DECLSPEC int  SDLCALL SDLNet_Init(void);
+	extern DECLSPEC void SDLCALL SDLNet_Quit(void);
+	extern DECLSPEC int SDLCALL SDLNet_ResolveHost(IPaddress *address, const char *host, Uint16 port);
+	extern DECLSPEC const char * SDLCALL SDLNet_ResolveIP(const IPaddress *ip);
+	extern DECLSPEC int SDLCALL SDLNet_GetLocalAddresses(IPaddress *addresses, int maxcount);
+	extern DECLSPEC TCPsocket SDLCALL SDLNet_TCP_Open(IPaddress *ip);
+	extern DECLSPEC TCPsocket SDLCALL SDLNet_TCP_Accept(TCPsocket server);
+	extern DECLSPEC IPaddress * SDLCALL SDLNet_TCP_GetPeerAddress(TCPsocket sock);
+	extern DECLSPEC int SDLCALL SDLNet_TCP_Send(TCPsocket sock, const void *data,
+	        int len);
+	extern DECLSPEC int SDLCALL SDLNet_TCP_Recv(TCPsocket sock, void *data, int maxlen);
+	extern DECLSPEC void SDLCALL SDLNet_TCP_Close(TCPsocket sock);
+	extern DECLSPEC UDPpacket * SDLCALL SDLNet_AllocPacket(int size);
+	extern DECLSPEC int SDLCALL SDLNet_ResizePacket(UDPpacket *packet, int newsize);
+	extern DECLSPEC void SDLCALL SDLNet_FreePacket(UDPpacket *packet);
+	extern DECLSPEC UDPpacket ** SDLCALL SDLNet_AllocPacketV(int howmany, int size);
+	extern DECLSPEC void SDLCALL SDLNet_FreePacketV(UDPpacket **packetV);
+	extern DECLSPEC UDPsocket SDLCALL SDLNet_UDP_Open(Uint16 port);
+	extern DECLSPEC void SDLCALL SDLNet_UDP_SetPacketLoss(UDPsocket sock, int percent);
+	extern DECLSPEC int SDLCALL SDLNet_UDP_Bind(UDPsocket sock, int channel, const IPaddress *address);
+	extern DECLSPEC void SDLCALL SDLNet_UDP_Unbind(UDPsocket sock, int channel);
+	extern DECLSPEC IPaddress * SDLCALL SDLNet_UDP_GetPeerAddress(UDPsocket sock, int channel);
+	extern DECLSPEC int SDLCALL SDLNet_UDP_SendV(UDPsocket sock, UDPpacket **packets, int npackets);
+	extern DECLSPEC int SDLCALL SDLNet_UDP_Send(UDPsocket sock, int channel, UDPpacket *packet);
+	extern DECLSPEC int SDLCALL SDLNet_UDP_RecvV(UDPsocket sock, UDPpacket **packets);
+	extern DECLSPEC int SDLCALL SDLNet_UDP_Recv(UDPsocket sock, UDPpacket *packet);
+	extern DECLSPEC void SDLCALL SDLNet_UDP_Close(UDPsocket sock);
+	extern DECLSPEC SDLNet_SocketSet SDLCALL SDLNet_AllocSocketSet(int maxsockets);
+	extern DECLSPEC int SDLCALL SDLNet_AddSocket(SDLNet_SocketSet set, SDLNet_GenericSocket sock);
+	extern DECLSPEC int SDLCALL SDLNet_DelSocket(SDLNet_SocketSet set, SDLNet_GenericSocket sock);
+	extern DECLSPEC int SDLCALL SDLNet_CheckSockets(SDLNet_SocketSet set, Uint32 timeout);
+	extern DECLSPEC void SDLCALL SDLNet_FreeSocketSet(SDLNet_SocketSet set);
+	extern DECLSPEC void SDLCALL SDLNet_SetError(const char *fmt, ...);
+	extern DECLSPEC const char * SDLCALL SDLNet_GetError(void);
 ### SDL_shape.h
 	extern DECLSPEC SDL_Window * SDLCALL SDL_CreateShapedWindow(const char *title,unsigned int x,unsigned int y,unsigned int w,unsigned int h,Uint32 flags);
 	extern DECLSPEC SDL_bool SDLCALL SDL_IsShapedWindow(const SDL_Window *window);
@@ -977,6 +1137,72 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC SDL_TouchID SDLCALL SDL_GetTouchDevice(int index);
 	extern DECLSPEC int SDLCALL SDL_GetNumTouchFingers(SDL_TouchID touchID);
 	extern DECLSPEC SDL_Finger * SDLCALL SDL_GetTouchFinger(SDL_TouchID touchID, int index);
+### SDL_ttf.h
+	extern DECLSPEC const SDL_version * SDLCALL TTF_Linked_Version(void);
+	extern DECLSPEC void SDLCALL TTF_ByteSwappedUNICODE(int swapped);
+	extern DECLSPEC int SDLCALL TTF_Init(void);
+	extern DECLSPEC TTF_Font * SDLCALL TTF_OpenFont(const char *file, int ptsize);
+	extern DECLSPEC TTF_Font * SDLCALL TTF_OpenFontIndex(const char *file, int ptsize, long index);
+	extern DECLSPEC TTF_Font * SDLCALL TTF_OpenFontRW(SDL_RWops *src, int freesrc, int ptsize);
+	extern DECLSPEC TTF_Font * SDLCALL TTF_OpenFontIndexRW(SDL_RWops *src, int freesrc, int ptsize, long index);
+	extern DECLSPEC int SDLCALL TTF_GetFontStyle(const TTF_Font *font);
+	extern DECLSPEC void SDLCALL TTF_SetFontStyle(TTF_Font *font, int style);
+	extern DECLSPEC int SDLCALL TTF_GetFontOutline(const TTF_Font *font);
+	extern DECLSPEC void SDLCALL TTF_SetFontOutline(TTF_Font *font, int outline);
+	extern DECLSPEC int SDLCALL TTF_GetFontHinting(const TTF_Font *font);
+	extern DECLSPEC void SDLCALL TTF_SetFontHinting(TTF_Font *font, int hinting);
+	extern DECLSPEC int SDLCALL TTF_FontHeight(const TTF_Font *font);
+	extern DECLSPEC int SDLCALL TTF_FontAscent(const TTF_Font *font);
+	extern DECLSPEC int SDLCALL TTF_FontDescent(const TTF_Font *font);
+	extern DECLSPEC int SDLCALL TTF_FontLineSkip(const TTF_Font *font);
+	extern DECLSPEC int SDLCALL TTF_GetFontKerning(const TTF_Font *font);
+	extern DECLSPEC void SDLCALL TTF_SetFontKerning(TTF_Font *font, int allowed);
+	extern DECLSPEC long SDLCALL TTF_FontFaces(const TTF_Font *font);
+	extern DECLSPEC int SDLCALL TTF_FontFaceIsFixedWidth(const TTF_Font *font);
+	extern DECLSPEC char * SDLCALL TTF_FontFaceFamilyName(const TTF_Font *font);
+	extern DECLSPEC char * SDLCALL TTF_FontFaceStyleName(const TTF_Font *font);
+	extern DECLSPEC int SDLCALL TTF_GlyphIsProvided(const TTF_Font *font, Uint16 ch);
+	extern DECLSPEC int SDLCALL TTF_GlyphMetrics(TTF_Font *font, Uint16 ch,
+	                     int *minx, int *maxx,
+	                                     int *miny, int *maxy, int *advance);
+	extern DECLSPEC int SDLCALL TTF_SizeText(TTF_Font *font, const char *text, int *w, int *h);
+	extern DECLSPEC int SDLCALL TTF_SizeUTF8(TTF_Font *font, const char *text, int *w, int *h);
+	extern DECLSPEC int SDLCALL TTF_SizeUNICODE(TTF_Font *font, const Uint16 *text, int *w, int *h);
+	extern DECLSPEC SDL_Surface * SDLCALL TTF_RenderText_Solid(TTF_Font *font,
+	                const char *text, SDL_Color fg);
+	extern DECLSPEC SDL_Surface * SDLCALL TTF_RenderUTF8_Solid(TTF_Font *font,
+	                const char *text, SDL_Color fg);
+	extern DECLSPEC SDL_Surface * SDLCALL TTF_RenderUNICODE_Solid(TTF_Font *font,
+	                const Uint16 *text, SDL_Color fg);
+	extern DECLSPEC SDL_Surface * SDLCALL TTF_RenderGlyph_Solid(TTF_Font *font,
+	                    Uint16 ch, SDL_Color fg);
+	extern DECLSPEC SDL_Surface * SDLCALL TTF_RenderText_Shaded(TTF_Font *font,
+	                const char *text, SDL_Color fg, SDL_Color bg);
+	extern DECLSPEC SDL_Surface * SDLCALL TTF_RenderUTF8_Shaded(TTF_Font *font,
+	                const char *text, SDL_Color fg, SDL_Color bg);
+	extern DECLSPEC SDL_Surface * SDLCALL TTF_RenderUNICODE_Shaded(TTF_Font *font,
+	                const Uint16 *text, SDL_Color fg, SDL_Color bg);
+	extern DECLSPEC SDL_Surface * SDLCALL TTF_RenderGlyph_Shaded(TTF_Font *font,
+	                Uint16 ch, SDL_Color fg, SDL_Color bg);
+	extern DECLSPEC SDL_Surface * SDLCALL TTF_RenderText_Blended(TTF_Font *font,
+	                const char *text, SDL_Color fg);
+	extern DECLSPEC SDL_Surface * SDLCALL TTF_RenderUTF8_Blended(TTF_Font *font,
+	                const char *text, SDL_Color fg);
+	extern DECLSPEC SDL_Surface * SDLCALL TTF_RenderUNICODE_Blended(TTF_Font *font,
+	                const Uint16 *text, SDL_Color fg);
+	extern DECLSPEC SDL_Surface * SDLCALL TTF_RenderText_Blended_Wrapped(TTF_Font *font,
+	                const char *text, SDL_Color fg, Uint32 wrapLength);
+	extern DECLSPEC SDL_Surface * SDLCALL TTF_RenderUTF8_Blended_Wrapped(TTF_Font *font,
+	                const char *text, SDL_Color fg, Uint32 wrapLength);
+	extern DECLSPEC SDL_Surface * SDLCALL TTF_RenderUNICODE_Blended_Wrapped(TTF_Font *font,
+	                const Uint16 *text, SDL_Color fg, Uint32 wrapLength);
+	extern DECLSPEC SDL_Surface * SDLCALL TTF_RenderGlyph_Blended(TTF_Font *font,
+	                        Uint16 ch, SDL_Color fg);
+	extern DECLSPEC void SDLCALL TTF_CloseFont(TTF_Font *font);
+	extern DECLSPEC void SDLCALL TTF_Quit(void);
+	extern DECLSPEC int SDLCALL TTF_WasInit(void);
+	extern DECLSPEC int TTF_GetFontKerningSize(TTF_Font *font, int prev_index, int index) SDL_DEPRECATED;
+	extern DECLSPEC int TTF_GetFontKerningSizeGlyphs(TTF_Font *font, Uint16 previous_ch, Uint16 ch);
 ### SDL_vulkan.h
 	extern DECLSPEC int SDLCALL SDL_Vulkan_LoadLibrary(const char *path);
 	extern DECLSPEC void *SDLCALL SDL_Vulkan_GetVkGetInstanceProcAddr(void);
