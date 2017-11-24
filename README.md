@@ -55,6 +55,13 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC void SDLCALL SDL_LogGetOutputFunction(SDL_LogOutputFunction *callback, void **userdata);
 	extern DECLSPEC void SDLCALL SDL_LogSetOutputFunction(SDL_LogOutputFunction callback, void *userdata);
 ### SDL_assert.h - Assertions
+	#elif SDL_ASSERT_LEVEL == 1  /* release settings. */
+	#   define SDL_assert(condition) SDL_disabled_assert(condition)
+	#   define SDL_assert_release(condition) SDL_enabled_assert(condition)
+	#elif SDL_ASSERT_LEVEL == 2  /* normal settings. */
+	#   define SDL_assert(condition) SDL_enabled_assert(condition)
+	#   define SDL_assert_release(condition) SDL_enabled_assert(condition)
+	#define SDL_assert_always(condition) SDL_enabled_assert(condition)
 	extern DECLSPEC void SDLCALL SDL_SetAssertionHandler(
 	                                            SDL_AssertionHandler handler,
 	                                            void *userdata);
