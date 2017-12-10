@@ -720,10 +720,6 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	                 pfnSDL_CurrentBeginThread pfnBeginThread,
 	                 pfnSDL_CurrentEndThread pfnEndThread);
 	extern DECLSPEC SDL_Thread *SDLCALL
-	SDL_CreateThread(SDL_ThreadFunction fn, const char *name, void *data,
-	                 pfnSDL_CurrentBeginThread pfnBeginThread,
-	                 pfnSDL_CurrentEndThread pfnEndThread);
-	extern DECLSPEC SDL_Thread *SDLCALL
 	SDL_CreateThread(SDL_ThreadFunction fn, const char *name, void *data);
 	extern DECLSPEC const char *SDLCALL SDL_GetThreadName(SDL_Thread *thread);
 	extern DECLSPEC SDL_threadID SDLCALL SDL_ThreadID(void);
