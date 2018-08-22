@@ -55,12 +55,25 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC void SDLCALL SDL_LogGetOutputFunction(SDL_LogOutputFunction *callback, void **userdata);
 	extern DECLSPEC void SDLCALL SDL_LogSetOutputFunction(SDL_LogOutputFunction callback, void *userdata);
 ### SDL_assert.h - Assertions
+	#if SDL_ASSERT_LEVEL == 0   /* assertions disabled */
+	#   define SDL_assert(condition) SDL_disabled_assert(condition)
+	#   define SDL_assert_release(condition) SDL_disabled_assert(condition)
+	#   define SDL_assert_paranoid(condition) SDL_disabled_assert(condition)
 	#elif SDL_ASSERT_LEVEL == 1  /* release settings. */
 	#   define SDL_assert(condition) SDL_disabled_assert(condition)
 	#   define SDL_assert_release(condition) SDL_enabled_assert(condition)
+	#   define SDL_assert_paranoid(condition) SDL_disabled_assert(condition)
 	#elif SDL_ASSERT_LEVEL == 2  /* normal settings. */
 	#   define SDL_assert(condition) SDL_enabled_assert(condition)
 	#   define SDL_assert_release(condition) SDL_enabled_assert(condition)
+	#   define SDL_assert_paranoid(condition) SDL_disabled_assert(condition)
+	#elif SDL_ASSERT_LEVEL == 3  /* paranoid settings. */
+	#   define SDL_assert(condition) SDL_enabled_assert(condition)
+	#   define SDL_assert_release(condition) SDL_enabled_assert(condition)
+	#   define SDL_assert_paranoid(condition) SDL_enabled_assert(condition)
+	#else
+	#   error Unknown assertion level.
+	#endif
 	#define SDL_assert_always(condition) SDL_enabled_assert(condition)
 	extern DECLSPEC void SDLCALL SDL_SetAssertionHandler(
 	                                            SDL_AssertionHandler handler,
@@ -317,6 +330,8 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC void SDLCALL SDL_DestroyRenderer(SDL_Renderer * renderer);
 	extern DECLSPEC int SDLCALL SDL_GL_BindTexture(SDL_Texture *texture, float *texw, float *texh);
 	extern DECLSPEC int SDLCALL SDL_GL_UnbindTexture(SDL_Texture *texture);
+	extern DECLSPEC void *SDLCALL SDL_RenderGetMetalLayer(SDL_Renderer * renderer);
+	extern DECLSPEC void *SDLCALL SDL_RenderGetMetalCommandEncoder(SDL_Renderer * renderer);
 ### SDL_pixels.h - Pixel Formats and Conversion Routines
 	extern DECLSPEC const char* SDLCALL SDL_GetPixelFormatName(Uint32 format);
 	extern DECLSPEC SDL_bool SDLCALL SDL_PixelFormatEnumToMasks(Uint32 format,
@@ -448,6 +463,9 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC int SDLCALL SDL_LowerBlitScaled
 	    (SDL_Surface * src, SDL_Rect * srcrect,
 	    SDL_Surface * dst, SDL_Rect * dstrect);
+	extern DECLSPEC void SDLCALL SDL_SetYUVConversionMode(SDL_YUV_CONVERSION_MODE mode);
+	extern DECLSPEC SDL_YUV_CONVERSION_MODE SDLCALL SDL_GetYUVConversionMode(void);
+	extern DECLSPEC SDL_YUV_CONVERSION_MODE SDLCALL SDL_GetYUVConversionModeForResolution(int width, int height);
 ### SDL_syswm.h - Platform-specific Window Management
 	extern DECLSPEC SDL_bool SDLCALL SDL_GetWindowWMInfo(SDL_Window * window,
 	                                                     SDL_SysWMinfo * info);
@@ -850,11 +868,13 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC void SDLCALL SDL_iPhoneSetEventPump(SDL_bool enabled);
 	extern DECLSPEC void * SDLCALL SDL_AndroidGetJNIEnv(void);
 	extern DECLSPEC void * SDLCALL SDL_AndroidGetActivity(void);
+	extern DECLSPEC SDL_bool SDLCALL SDL_IsAndroidTV(void);
 	extern DECLSPEC const char * SDLCALL SDL_AndroidGetInternalStoragePath(void);
 	extern DECLSPEC int SDLCALL SDL_AndroidGetExternalStorageState(void);
 	extern DECLSPEC const char * SDLCALL SDL_AndroidGetExternalStoragePath(void);
 	extern DECLSPEC const wchar_t * SDLCALL SDL_WinRTGetFSPathUNICODE(SDL_WinRT_Path pathType);
 	extern DECLSPEC const char * SDLCALL SDL_WinRTGetFSPathUTF8(SDL_WinRT_Path pathType);
+	extern DECLSPEC SDL_WinRT_DeviceFamily SDLCALL SDL_WinRTGetDeviceFamily();
 ### SDL_stdinc.h - Standard Library Functionality
 	extern DECLSPEC void *SDLCALL SDL_malloc(size_t size);
 	extern DECLSPEC void *SDLCALL SDL_calloc(size_t nmemb, size_t size);
@@ -919,18 +939,33 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC int SDLCALL SDL_snprintf(SDL_OUT_Z_CAP(maxlen) char *text, size_t maxlen, SDL_PRINTF_FORMAT_STRING const char *fmt, ... ) SDL_PRINTF_VARARG_FUNC(3);
 	extern DECLSPEC int SDLCALL SDL_vsnprintf(SDL_OUT_Z_CAP(maxlen) char *text, size_t maxlen, const char *fmt, va_list ap);
 	extern DECLSPEC double SDLCALL SDL_acos(double x);
+	extern DECLSPEC float SDLCALL SDL_acosf(float x);
 	extern DECLSPEC double SDLCALL SDL_asin(double x);
+	extern DECLSPEC float SDLCALL SDL_asinf(float x);
 	extern DECLSPEC double SDLCALL SDL_atan(double x);
+	extern DECLSPEC float SDLCALL SDL_atanf(float x);
 	extern DECLSPEC double SDLCALL SDL_atan2(double x, double y);
+	extern DECLSPEC float SDLCALL SDL_atan2f(float x, float y);
 	extern DECLSPEC double SDLCALL SDL_ceil(double x);
+	extern DECLSPEC float SDLCALL SDL_ceilf(float x);
 	extern DECLSPEC double SDLCALL SDL_copysign(double x, double y);
+	extern DECLSPEC float SDLCALL SDL_copysignf(float x, float y);
 	extern DECLSPEC double SDLCALL SDL_cos(double x);
 	extern DECLSPEC float SDLCALL SDL_cosf(float x);
 	extern DECLSPEC double SDLCALL SDL_fabs(double x);
+	extern DECLSPEC float SDLCALL SDL_fabsf(float x);
 	extern DECLSPEC double SDLCALL SDL_floor(double x);
+	extern DECLSPEC float SDLCALL SDL_floorf(float x);
+	extern DECLSPEC double SDLCALL SDL_fmod(double x, double y);
+	extern DECLSPEC float SDLCALL SDL_fmodf(float x, float y);
 	extern DECLSPEC double SDLCALL SDL_log(double x);
+	extern DECLSPEC float SDLCALL SDL_logf(float x);
+	extern DECLSPEC double SDLCALL SDL_log10(double x);
+	extern DECLSPEC float SDLCALL SDL_log10f(float x);
 	extern DECLSPEC double SDLCALL SDL_pow(double x, double y);
+	extern DECLSPEC float SDLCALL SDL_powf(float x, float y);
 	extern DECLSPEC double SDLCALL SDL_scalbn(double x, int n);
+	extern DECLSPEC float SDLCALL SDL_scalbnf(float x, int n);
 	extern DECLSPEC double SDLCALL SDL_sin(double x);
 	extern DECLSPEC float SDLCALL SDL_sinf(float x);
 	extern DECLSPEC double SDLCALL SDL_sqrt(double x);
@@ -1007,7 +1042,8 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC int SDLCALL IMG_SaveJPG(SDL_Surface *surface, const char *file, int quality);
 	extern DECLSPEC int SDLCALL IMG_SaveJPG_RW(SDL_Surface *surface, SDL_RWops *dst, int freedst, int quality);
 ### SDL_main.h
-	extern C_LINKAGE DECLSPEC int SDL_main(int argc, char *argv[]);
+	#define SDLMAIN_DECLSPEC    DECLSPEC
+	extern C_LINKAGE SDLMAIN_DECLSPEC int SDL_main(int argc, char *argv[]);
 	extern DECLSPEC void SDLCALL SDL_SetMainReady(void);
 	extern DECLSPEC int SDLCALL SDL_RegisterApp(char *name, Uint32 style,
 	                                            void *hInst);
