@@ -322,6 +322,37 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	                                           const double angle,
 	                                           const SDL_Point *center,
 	                                           const SDL_RendererFlip flip);
+	extern DECLSPEC int SDLCALL SDL_RenderDrawPointF(SDL_Renderer * renderer,
+	                                                 float x, float y);
+	extern DECLSPEC int SDLCALL SDL_RenderDrawPointsF(SDL_Renderer * renderer,
+	                                                  const SDL_FPoint * points,
+	                                                  int count);
+	extern DECLSPEC int SDLCALL SDL_RenderDrawLineF(SDL_Renderer * renderer,
+	                                                float x1, float y1, float x2, float y2);
+	extern DECLSPEC int SDLCALL SDL_RenderDrawLinesF(SDL_Renderer * renderer,
+	                                                const SDL_FPoint * points,
+	                                                int count);
+	extern DECLSPEC int SDLCALL SDL_RenderDrawRectF(SDL_Renderer * renderer,
+	                                               const SDL_FRect * rect);
+	extern DECLSPEC int SDLCALL SDL_RenderDrawRectsF(SDL_Renderer * renderer,
+	                                                 const SDL_FRect * rects,
+	                                                 int count);
+	extern DECLSPEC int SDLCALL SDL_RenderFillRectF(SDL_Renderer * renderer,
+	                                                const SDL_FRect * rect);
+	extern DECLSPEC int SDLCALL SDL_RenderFillRectsF(SDL_Renderer * renderer,
+	                                                 const SDL_FRect * rects,
+	                                                 int count);
+	extern DECLSPEC int SDLCALL SDL_RenderCopyF(SDL_Renderer * renderer,
+	                                            SDL_Texture * texture,
+	                                            const SDL_Rect * srcrect,
+	                                            const SDL_FRect * dstrect);
+	extern DECLSPEC int SDLCALL SDL_RenderCopyExF(SDL_Renderer * renderer,
+	                                            SDL_Texture * texture,
+	                                            const SDL_Rect * srcrect,
+	                                            const SDL_FRect * dstrect,
+	                                            const double angle,
+	                                            const SDL_FPoint *center,
+	                                            const SDL_RendererFlip flip);
 	extern DECLSPEC int SDLCALL SDL_RenderReadPixels(SDL_Renderer * renderer,
 	                                                 const SDL_Rect * rect,
 	                                                 Uint32 format,
@@ -329,6 +360,7 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC void SDLCALL SDL_RenderPresent(SDL_Renderer * renderer);
 	extern DECLSPEC void SDLCALL SDL_DestroyTexture(SDL_Texture * texture);
 	extern DECLSPEC void SDLCALL SDL_DestroyRenderer(SDL_Renderer * renderer);
+	extern DECLSPEC int SDLCALL SDL_RenderFlush(SDL_Renderer * renderer);
 	extern DECLSPEC int SDLCALL SDL_GL_BindTexture(SDL_Texture *texture, float *texw, float *texh);
 	extern DECLSPEC int SDLCALL SDL_GL_UnbindTexture(SDL_Texture *texture);
 	extern DECLSPEC void *SDLCALL SDL_RenderGetMetalLayer(SDL_Renderer * renderer);
@@ -841,8 +873,18 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	                                                      int size);
 	extern DECLSPEC SDL_RWops *SDLCALL SDL_AllocRW(void);
 	extern DECLSPEC void SDLCALL SDL_FreeRW(SDL_RWops * area);
+	extern DECLSPEC Sint64 SDLCALL SDL_RWsize(SDL_RWops *context);
+	extern DECLSPEC Sint64 SDLCALL SDL_RWseek(SDL_RWops *context,
+	                                          Sint64 offset, int whence);
+	extern DECLSPEC Sint64 SDLCALL SDL_RWtell(SDL_RWops *context);
+	extern DECLSPEC size_t SDLCALL SDL_RWread(SDL_RWops *context,
+	                                          void *ptr, size_t size, size_t maxnum);
+	extern DECLSPEC size_t SDLCALL SDL_RWwrite(SDL_RWops *context,
+	                                           const void *ptr, size_t size, size_t num);
+	extern DECLSPEC int SDLCALL SDL_RWclose(SDL_RWops *context);
 	extern DECLSPEC void *SDLCALL SDL_LoadFile_RW(SDL_RWops * src, size_t *datasize,
 	                                                    int freesrc);
+	extern DECLSPEC void *SDLCALL SDL_LoadFile(const char *file, size_t *datasize);
 	extern DECLSPEC Uint8 SDLCALL SDL_ReadU8(SDL_RWops * src);
 	extern DECLSPEC Uint16 SDLCALL SDL_ReadLE16(SDL_RWops * src);
 	extern DECLSPEC Uint16 SDLCALL SDL_ReadBE16(SDL_RWops * src);
@@ -883,6 +925,9 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC SDL_bool SDLCALL SDL_HasAVX512F(void);
 	extern DECLSPEC SDL_bool SDLCALL SDL_HasNEON(void);
 	extern DECLSPEC int SDLCALL SDL_GetSystemRAM(void);
+	extern DECLSPEC size_t SDLCALL SDL_SIMDGetAlignment(void);
+	extern DECLSPEC void * SDLCALL SDL_SIMDAlloc(const size_t len);
+	extern DECLSPEC void SDLCALL SDL_SIMDFree(void *ptr);
 ### SDL_endian.h - Byte Order and Byte Swapping
 	SDL_FORCE_INLINE Uint16 SDL_Swap16(Uint16 x);
 	SDL_FORCE_INLINE Uint32 SDL_Swap32(Uint32 x);
@@ -1086,12 +1131,13 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC int SDLCALL IMG_SaveJPG_RW(SDL_Surface *surface, SDL_RWops *dst, int freedst, int quality);
 ### SDL_main.h
 	#define SDLMAIN_DECLSPEC    DECLSPEC
-	extern C_LINKAGE SDLMAIN_DECLSPEC int SDL_main(int argc, char *argv[]);
+	typedef int (*SDL_main_func)(int argc, char *argv[]);
+	extern SDLMAIN_DECLSPEC int SDL_main(int argc, char *argv[]);
 	extern DECLSPEC void SDLCALL SDL_SetMainReady(void);
-	extern DECLSPEC int SDLCALL SDL_RegisterApp(char *name, Uint32 style,
-	                                            void *hInst);
+	extern DECLSPEC int SDLCALL SDL_RegisterApp(char *name, Uint32 style, void *hInst);
 	extern DECLSPEC void SDLCALL SDL_UnregisterApp(void);
-	extern DECLSPEC int SDLCALL SDL_WinRTRunApp(int (*mainFunction)(int, char **), void * reserved);
+	extern DECLSPEC int SDLCALL SDL_WinRTRunApp(SDL_main_func mainFunction, void * reserved);
+	extern DECLSPEC int SDLCALL SDL_UIKitRunApp(int argc, char *argv[], SDL_main_func mainFunction);
 ### SDL_messagebox.h
 	extern DECLSPEC int SDLCALL SDL_ShowMessageBox(const SDL_MessageBoxData *messageboxdata, int *buttonid);
 	extern DECLSPEC int SDLCALL SDL_ShowSimpleMessageBox(Uint32 flags, const char *title, const char *message, SDL_Window *window);
@@ -1217,6 +1263,7 @@ Check the license files in lib/ for SDL2 and its dependencies.
 ### SDL_touch.h
 	extern DECLSPEC int SDLCALL SDL_GetNumTouchDevices(void);
 	extern DECLSPEC SDL_TouchID SDLCALL SDL_GetTouchDevice(int index);
+	extern DECLSPEC SDL_TouchDeviceType SDLCALL SDL_GetTouchDeviceType(SDL_TouchID touchID);
 	extern DECLSPEC int SDLCALL SDL_GetNumTouchFingers(SDL_TouchID touchID);
 	extern DECLSPEC SDL_Finger * SDLCALL SDL_GetTouchFinger(SDL_TouchID touchID, int index);
 ### SDL_ttf.h
