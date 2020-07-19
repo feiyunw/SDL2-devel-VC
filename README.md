@@ -246,6 +246,10 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	                                                    SDL_BlendMode blendMode);
 	extern DECLSPEC int SDLCALL SDL_GetTextureBlendMode(SDL_Texture * texture,
 	                                                    SDL_BlendMode *blendMode);
+	extern DECLSPEC int SDLCALL SDL_SetTextureScaleMode(SDL_Texture * texture,
+	                                                    SDL_ScaleMode scaleMode);
+	extern DECLSPEC int SDLCALL SDL_GetTextureScaleMode(SDL_Texture * texture,
+	                                                    SDL_ScaleMode *scaleMode);
 	extern DECLSPEC int SDLCALL SDL_UpdateTexture(SDL_Texture * texture,
 	                                              const SDL_Rect * rect,
 	                                              const void *pixels, int pitch);
@@ -257,6 +261,9 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC int SDLCALL SDL_LockTexture(SDL_Texture * texture,
 	                                            const SDL_Rect * rect,
 	                                            void **pixels, int *pitch);
+	extern DECLSPEC int SDLCALL SDL_LockTextureToSurface(SDL_Texture *texture,
+	                                            const SDL_Rect *rect,
+	                                            SDL_Surface **surface);
 	extern DECLSPEC void SDLCALL SDL_UnlockTexture(SDL_Texture * texture);
 	extern DECLSPEC SDL_bool SDLCALL SDL_RenderTargetSupported(SDL_Renderer *renderer);
 	extern DECLSPEC int SDLCALL SDL_SetRenderTarget(SDL_Renderer *renderer,
@@ -588,9 +595,11 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC SDL_JoystickType SDLCALL SDL_JoystickGetDeviceType(int device_index);
 	extern DECLSPEC SDL_JoystickID SDLCALL SDL_JoystickGetDeviceInstanceID(int device_index);
 	extern DECLSPEC SDL_Joystick *SDLCALL SDL_JoystickOpen(int device_index);
-	extern DECLSPEC SDL_Joystick *SDLCALL SDL_JoystickFromInstanceID(SDL_JoystickID joyid);
+	extern DECLSPEC SDL_Joystick *SDLCALL SDL_JoystickFromInstanceID(SDL_JoystickID instance_id);
+	extern DECLSPEC SDL_Joystick *SDLCALL SDL_JoystickFromPlayerIndex(int player_index);
 	extern DECLSPEC const char *SDLCALL SDL_JoystickName(SDL_Joystick * joystick);
 	extern DECLSPEC int SDLCALL SDL_JoystickGetPlayerIndex(SDL_Joystick * joystick);
+	extern DECLSPEC void SDLCALL SDL_JoystickSetPlayerIndex(SDL_Joystick * joystick, int player_index);
 	extern DECLSPEC SDL_JoystickGUID SDLCALL SDL_JoystickGetGUID(SDL_Joystick * joystick);
 	extern DECLSPEC Uint16 SDLCALL SDL_JoystickGetVendor(SDL_Joystick * joystick);
 	extern DECLSPEC Uint16 SDLCALL SDL_JoystickGetProduct(SDL_Joystick * joystick);
@@ -628,11 +637,15 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC char * SDLCALL SDL_GameControllerMapping(SDL_GameController * gamecontroller);
 	extern DECLSPEC SDL_bool SDLCALL SDL_IsGameController(int joystick_index);
 	extern DECLSPEC const char *SDLCALL SDL_GameControllerNameForIndex(int joystick_index);
+	extern DECLSPEC SDL_GameControllerType SDLCALL SDL_GameControllerTypeForIndex(int joystick_index);
 	extern DECLSPEC char *SDLCALL SDL_GameControllerMappingForDeviceIndex(int joystick_index);
 	extern DECLSPEC SDL_GameController *SDLCALL SDL_GameControllerOpen(int joystick_index);
 	extern DECLSPEC SDL_GameController *SDLCALL SDL_GameControllerFromInstanceID(SDL_JoystickID joyid);
+	extern DECLSPEC SDL_GameController *SDLCALL SDL_GameControllerFromPlayerIndex(int player_index);
 	extern DECLSPEC const char *SDLCALL SDL_GameControllerName(SDL_GameController *gamecontroller);
+	extern DECLSPEC SDL_GameControllerType SDLCALL SDL_GameControllerGetType(SDL_GameController *gamecontroller);
 	extern DECLSPEC int SDLCALL SDL_GameControllerGetPlayerIndex(SDL_GameController *gamecontroller);
+	extern DECLSPEC void SDLCALL SDL_GameControllerSetPlayerIndex(SDL_GameController *gamecontroller, int player_index);
 	extern DECLSPEC Uint16 SDLCALL SDL_GameControllerGetVendor(SDL_GameController * gamecontroller);
 	extern DECLSPEC Uint16 SDLCALL SDL_GameControllerGetProduct(SDL_GameController * gamecontroller);
 	extern DECLSPEC Uint16 SDLCALL SDL_GameControllerGetProductVersion(SDL_GameController * gamecontroller);
@@ -923,6 +936,7 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC SDL_bool SDLCALL SDL_HasAVX(void);
 	extern DECLSPEC SDL_bool SDLCALL SDL_HasAVX2(void);
 	extern DECLSPEC SDL_bool SDLCALL SDL_HasAVX512F(void);
+	extern DECLSPEC SDL_bool SDLCALL SDL_HasARMSIMD(void);
 	extern DECLSPEC SDL_bool SDLCALL SDL_HasNEON(void);
 	extern DECLSPEC int SDLCALL SDL_GetSystemRAM(void);
 	extern DECLSPEC size_t SDLCALL SDL_SIMDGetAlignment(void);
@@ -935,6 +949,7 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	SDL_FORCE_INLINE float SDL_SwapFloat(float x);
 ### SDL_bits.h - Bit Manipulation
 	SDL_FORCE_INLINE int SDL_MostSignificantBitIndex32(Uint32 x);
+	SDL_FORCE_INLINE SDL_bool SDL_HasExactlyOneBitSet32(Uint32 x);
 ## Power Management
 ### SDL_power.h - Power Management Status
 	extern DECLSPEC SDL_PowerState SDLCALL SDL_GetPowerInfo(int *secs, int *pct);
@@ -949,6 +964,7 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC void SDLCALL SDL_iPhoneSetEventPump(SDL_bool enabled);
 	extern DECLSPEC void * SDLCALL SDL_AndroidGetJNIEnv(void);
 	extern DECLSPEC void * SDLCALL SDL_AndroidGetActivity(void);
+	extern DECLSPEC int SDLCALL SDL_GetAndroidSDKVersion(void);
 	extern DECLSPEC SDL_bool SDLCALL SDL_IsAndroidTV(void);
 	extern DECLSPEC SDL_bool SDLCALL SDL_IsChromebook(void);
 	extern DECLSPEC SDL_bool SDLCALL SDL_IsDeXMode(void);
@@ -960,6 +976,13 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC const char * SDLCALL SDL_WinRTGetFSPathUTF8(SDL_WinRT_Path pathType);
 	extern DECLSPEC SDL_WinRT_DeviceFamily SDLCALL SDL_WinRTGetDeviceFamily();
 	extern DECLSPEC SDL_bool SDLCALL SDL_IsTablet(void);
+	extern DECLSPEC void SDLCALL SDL_OnApplicationWillTerminate(void);
+	extern DECLSPEC void SDLCALL SDL_OnApplicationDidReceiveMemoryWarning(void);
+	extern DECLSPEC void SDLCALL SDL_OnApplicationWillResignActive(void);
+	extern DECLSPEC void SDLCALL SDL_OnApplicationDidEnterBackground(void);
+	extern DECLSPEC void SDLCALL SDL_OnApplicationWillEnterForeground(void);
+	extern DECLSPEC void SDLCALL SDL_OnApplicationDidBecomeActive(void);
+	extern DECLSPEC void SDLCALL SDL_OnApplicationDidChangeStatusBarOrientation(void);
 ### SDL_stdinc.h - Standard Library Functionality
 	extern DECLSPEC void *SDLCALL SDL_malloc(size_t size);
 	extern DECLSPEC void *SDLCALL SDL_calloc(size_t nmemb, size_t size);
@@ -980,17 +1003,21 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC int SDLCALL SDL_abs(int x);
 	extern DECLSPEC int SDLCALL SDL_isdigit(int x);
 	extern DECLSPEC int SDLCALL SDL_isspace(int x);
+	extern DECLSPEC int SDLCALL SDL_isupper(int x);
+	extern DECLSPEC int SDLCALL SDL_islower(int x);
 	extern DECLSPEC int SDLCALL SDL_toupper(int x);
 	extern DECLSPEC int SDLCALL SDL_tolower(int x);
 	extern DECLSPEC void *SDLCALL SDL_memset(SDL_OUT_BYTECAP(len) void *dst, int c, size_t len);
 	extern DECLSPEC void *SDLCALL SDL_memcpy(SDL_OUT_BYTECAP(len) void *dst, SDL_IN_BYTECAP(len) const void *src, size_t len);
 	extern DECLSPEC void *SDLCALL SDL_memmove(SDL_OUT_BYTECAP(len) void *dst, SDL_IN_BYTECAP(len) const void *src, size_t len);
 	extern DECLSPEC int SDLCALL SDL_memcmp(const void *s1, const void *s2, size_t len);
-	extern DECLSPEC wchar_t *SDLCALL SDL_wcsdup(const wchar_t *wstr);
 	extern DECLSPEC size_t SDLCALL SDL_wcslen(const wchar_t *wstr);
 	extern DECLSPEC size_t SDLCALL SDL_wcslcpy(SDL_OUT_Z_CAP(maxlen) wchar_t *dst, const wchar_t *src, size_t maxlen);
 	extern DECLSPEC size_t SDLCALL SDL_wcslcat(SDL_INOUT_Z_CAP(maxlen) wchar_t *dst, const wchar_t *src, size_t maxlen);
+	extern DECLSPEC wchar_t *SDLCALL SDL_wcsdup(const wchar_t *wstr);
+	extern DECLSPEC wchar_t *SDLCALL SDL_wcsstr(const wchar_t *haystack, const wchar_t *needle);
 	extern DECLSPEC int SDLCALL SDL_wcscmp(const wchar_t *str1, const wchar_t *str2);
+	extern DECLSPEC int SDLCALL SDL_wcsncmp(const wchar_t *str1, const wchar_t *str2, size_t maxlen);
 	extern DECLSPEC size_t SDLCALL SDL_strlen(const char *str);
 	extern DECLSPEC size_t SDLCALL SDL_strlcpy(SDL_OUT_Z_CAP(maxlen) char *dst, const char *src, size_t maxlen);
 	extern DECLSPEC size_t SDLCALL SDL_utf8strlcpy(SDL_OUT_Z_CAP(dst_bytes) char *dst, const char *src, size_t dst_bytes);
@@ -1002,6 +1029,7 @@ Check the license files in lib/ for SDL2 and its dependencies.
 	extern DECLSPEC char *SDLCALL SDL_strchr(const char *str, int c);
 	extern DECLSPEC char *SDLCALL SDL_strrchr(const char *str, int c);
 	extern DECLSPEC char *SDLCALL SDL_strstr(const char *haystack, const char *needle);
+	extern DECLSPEC char *SDLCALL SDL_strtokr(char *s1, const char *s2, char **saveptr);
 	extern DECLSPEC size_t SDLCALL SDL_utf8strlen(const char *str);
 	extern DECLSPEC char *SDLCALL SDL_itoa(int value, char *str, int radix);
 	extern DECLSPEC char *SDLCALL SDL_uitoa(unsigned int value, char *str, int radix);
@@ -1141,6 +1169,9 @@ Check the license files in lib/ for SDL2 and its dependencies.
 ### SDL_messagebox.h
 	extern DECLSPEC int SDLCALL SDL_ShowMessageBox(const SDL_MessageBoxData *messageboxdata, int *buttonid);
 	extern DECLSPEC int SDLCALL SDL_ShowSimpleMessageBox(Uint32 flags, const char *title, const char *message, SDL_Window *window);
+### SDL_metal.h
+	extern DECLSPEC SDL_MetalView SDLCALL SDL_Metal_CreateView(SDL_Window * window);
+	extern DECLSPEC void SDLCALL SDL_Metal_DestroyView(SDL_MetalView view);
 ### SDL_mixer.h
 	extern DECLSPEC const SDL_version * SDLCALL Mix_Linked_Version(void);
 	extern DECLSPEC int SDLCALL Mix_Init(int flags);
